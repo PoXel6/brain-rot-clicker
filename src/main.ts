@@ -27,18 +27,26 @@ function setCount(val: number): void {
 }
 
 multiBtn?.addEventListener('click', incMulti)
-function incMulti(): void {
-  if (getCount() < 10) {
-    return
-  }
-  setMulti(getMulti() + 1)
-  setCount(getCount() - def_multi_cost)
+function incMulti(e: MouseEvent): void {
+	if (getCount() < 10) {
+		return
+	}
+
+	if (e.shiftKey) {
+    const buyAllTup: [number, number] = [getCount() % 10, Math.floor(getCount() / 10)]
+    const [rem, multi] = buyAllTup
+    setCount(rem)
+    setMulti(getMulti() + multi)
+		return
+	}
+	setMulti(getMulti() + 1)
+	setCount(getCount() - def_multi_cost)
 }
 
 function setMulti(val: number): void {
-  def_multi = val
+	def_multi = val
 }
 
 function getMulti(): number {
-  return def_multi
+	return def_multi
 }
