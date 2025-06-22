@@ -10,7 +10,7 @@ function incCount() {
 }
 
 function getCount(): number {
-	const text = counter?.textContent
+	const text = counter?.innerText
 	if (!text) {
 		return -1
 	}
@@ -19,13 +19,11 @@ function getCount(): number {
 }
 
 function setCount(val: number): void {
-	const text = counter?.textContent
+	const text = counter?.innerText
 	if (!text) {
 		return
 	}
-	const texts = text.split(' ')
-	texts[2] = val.toString()
-	counter.innerText = texts.join(' ')
+	counter.innerText = `Count is ${val}`
 }
 
 multiBtn?.addEventListener('click', incMulti)
