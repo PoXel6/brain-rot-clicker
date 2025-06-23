@@ -20,11 +20,14 @@ const props = defineProps<Props>();
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  min-width: 20vw;
 
   button {
     margin-top: 3rem;
+    margin: 2rem 1rem;
     padding: 1rem 3rem;
-    min-width: 30ch;
+    height: 5rem;
+    width: 25rem;
     color: var(--text-2);
     background-color: var(--bg-2);
     border: 1px solid var(--border-1);
@@ -33,6 +36,7 @@ const props = defineProps<Props>();
     justify-content: center;
     align-items: center;
     font-family: "JetBrainsMono Nerd Font";
+    text-wrap: wrap;
   }
 
   button:hover {
