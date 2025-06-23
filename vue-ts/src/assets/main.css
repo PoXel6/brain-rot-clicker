@@ -1,7 +1,15 @@
 :root {
-	--bg-1: hsl(0, 0%, 0%);
-	--bg-2: hsl(0, 0%, 6%);
-	--bg-3: hsl(0, 0%, 12%);
+	--bg-1: hsl(0, 0%, 10%);
+	--bg-2: hsl(0, 0%, 20%);
+	--bg-3: hsl(0, 0%, 30%);
+
+	--border-1: hsl(0, 0%, 40%);
+	--border-2: hsl(0, 0%, 50%);
+	--border-3: hsl(0, 0%, 60%);
+
+	--text-1: hsl(0, 0%, 90%);
+	--text-2: hsl(0, 0%, 80%);
+	--text-3: hsl(0, 0%, 70%);
 }
 
 *,
@@ -12,6 +20,7 @@
 
 * {
 	margin: 0;
+	font-family: "Inter Variable", system-ui;
 }
 
 body {
