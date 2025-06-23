@@ -1,11 +1,10 @@
 <script setup lang="ts">
 interface Props {
 	text: string;
-	fg: string;
-	bg: string;
+	fg?: string;
 }
 
-const props = defineProps<Props>();
+const {fg = "var(--text-2)"} = defineProps<Props>();
 </script>
 
 <template>
@@ -28,20 +27,22 @@ const props = defineProps<Props>();
     padding: 1rem 3rem;
     height: 5rem;
     width: 25rem;
-    color: var(--text-2);
-    background-color: var(--bg-2);
+    color: v-bind(fg);
+    background-color: var(--primary-1);
     border: 1px solid var(--border-1);
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.2rem;
     font-family: "JetBrainsMono Nerd Font";
     text-wrap: wrap;
   }
 
   button:hover {
-    color: var(--text-3);
+    color: var(--secondary-1);
     background-color: var(--bg-3);
+    font-size: 1.3rem;
   }
 }
 </style>

@@ -1,134 +1,180 @@
 <script setup lang="ts">
+import App from "./App.vue";
 import { ref } from "vue";
 import GameButton from "./components/GameButton.vue";
+import "./assets/main.css";
 
 const count = ref(0);
 const multi = ref(1);
 const speed = ref(1000);
 
 const increase = () => {
-	count.value += multi.value;
+  count.value += multi.value;
 };
 
-function incMulti(e: MouseEvent) {
-	const cost = 10;
-	count.value -= cost;
-	buyAll(e, cost);
-	multi.value++;
+function incMulti(e: MouseEvent): void {
+  const cost = 10;
+  if (count.value < cost) return;
+  count.value -= cost;
+  buyAll(e, cost);
+  multi.value++;
 }
 
-function rebirth(e: MouseEvent) {
-	const cost = 100;
-	count.value -= cost;
-	buyAll(e, cost);
-	multi.value = 1;
-	setInterval(() => {
-		count.value++;
-	}, speed.value);
+function rebirth(e: MouseEvent): void {
+  const cost = 100;
+  if (count.value < cost) return;
+  count.value -= cost;
+  multi.value -= cost;
+  buyAll(e, cost);
+  setInterval(() => {
+    count.value++;
+  }, speed.value);
 }
 
-function halfSpeed(e: MouseEvent) {
-	const cost = 1_000_000;
-	count.value -= cost;
-	buyAll(e, cost);
-	Math.round(speed.value / 2);
-}
-
-function buyAll(e: MouseEvent, cost: number) {
-	if (e.shiftKey) {
-		const rem = count.value % cost;
-		const multiRem = Math.floor(count.value / cost);
-		count.value = rem;
-		multi.value += multiRem;
-		return;
-	}
+function halfSpeed(e: MouseEvent): void {
+  const cost = 1_000_000;
+  if (count.value < cost) return;
+  count.value -= cost;
+  buyAll(e, cost);
+  Math.round(speed.value / 2);
 }
 
 function truncate(): string {
-	if (count.value > 1_000_000_000_000) {
-		return `${Math.floor(count.value * 0.000_000_000_01) / 10}T`;
-	}
-	if (count.value > 1_000_000_000) {
-		return `${Math.floor(count.value * 0.000_000_01) / 10}B`;
-	}
-	if (count.value > 1_000_000) {
-		return `${Math.floor(count.value * 0.000_01) / 10}M`;
-	}
-	if (count.value > 1000) {
-		return `${Math.floor(count.value * 0.01) / 10}K`;
-	}
-	if (count.value <= 1000) {
-		return count.value;
-	}
-	return count.value.toString();
+  if (count.value > 1_000_000_000_000) {
+    return `${Math.floor(count.value * 0.000_000_000_01) / 10}T`;
+  }
+  if (count.value > 1_000_000_000) {
+    return `${Math.floor(count.value * 0.000_000_01) / 10}B`;
+  }
+  if (count.value > 1_000_000) {
+    return `${Math.floor(count.value * 0.000_01) / 10}M`;
+  }
+  if (count.value > 1000) {
+    return `${Math.floor(count.value * 0.01) / 10}K`;
+  }
+  if (count.value <= 1000) {
+    return count.value.toString();
+  }
+  return count.value.toString();
+}
+
+function buyAll(e: MouseEvent, cost: number): void {
+  if (e.shiftKey) {
+    const rem = count.value % cost;
+    const multiRem = Math.floor(count.value / cost);
+    count.value = rem;
+    multi.value += multiRem;
+    return;
+  }
 }
 </script>
 
 <template>
   <div class="container">
     <div class="inner">
-      <h1>Count is {{  truncate() }}</h1>
-      <p>Actual count value: {{ count }}</p>
-      <button @click="increase" class="counter">
-      Click me
-      </button>
+      <div class="inner__img">
+        <img src="../public/cookie_image.svg" alt="vue logo">
+      </div>
+      <div class="inner__text">
+        <h1>Count is {{ truncate() }}</h1>
+        <p>Actual count value: {{ count }}</p>
+        <p>Multiplier: {{ multi }}</p>
+        <button @click="increase" class="counter">
+          Click me
+        </button>
+      </div>
     </div>
     <div class="buttons">
-      <GameButton @click="incMulti" v-if="count >= 10" text="Multiplier +1 -10p" fg="white" bg="black"/>
-      <GameButton @click="rebirth" v-if="count >= 100" text="Rebirth" fg="magenta" bg="lightgray"/>
-      <GameButton @click="halfSpeed" v-if="count >= 1_000_000" text="Speeeed" fg="red" bg="white"/>
+      <GameButton @click="incMulti" v-if="count >= 10" text="Multiplier +1 -10p" />
+      <GameButton v-else text=" Reach 10 Point" fg="var(--warn)"/>
+      <GameButton @click="rebirth" v-if="count >= 100" text="Rebirth" />
+      <GameButton v-else text=" Reach 100 Point" fg="var(--warn)"/>
+      <GameButton @click="halfSpeed" v-if="count >= 1_000_000" text="Speeeed" />
+      <GameButton v-else text=" Reach 1_000_000 Point" fg="var(--warn)"/>
     </div>
   </div>
 </template>
 
 <style scoped>
+@import url(./assets/main.css);
+
 .container {
+  background-color: var(--bg-1);
   margin: auto;
   margin-top: 5rem;
+  width: 75vw;
+  height: 75vh;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 75vw;
-  height: 75vh;
-  background-color: hsl(150,50%,20%);
+  flex-direction: column;
 }
 
 .inner {
-  background-color: lightgray;
-  min-width: 50vw;
-  height: 50vh;
+  color: var(--text-2);
+  background-color: var(--bg-2);
+  border: 1px solid var(--border-1);
+  border-radius: 1.2rem;
+  min-width: 75vw;
+  min-height: 75vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 5rem;
   flex-direction: column;
-  font-size: 2rem;
-  font-family: "Inter Variable";
+
+
+  .inner__img {
+    img {
+      width: 15vw;
+      height: auto;
+    }
+  }
+
+  .inner__text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2rem;
+
+    h1,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 2.5rem;
+    }
+  }
 }
 
 .counter {
-  color: whitesmoke;
-  background-color: gray;
-  border: none;
+  color: var(--text-2);
+  background-color: var(--bg-1);
+  border: 1px solid var(--border-1);
   border-radius: 4px;
-  padding: 1rem 3rem;
+  max-width: 20vw;
+  min-width: 10vw;
+  max-height: 3vh;
+  min-height: 5vh;
   margin-top: 2rem;
-  border: 1px solid whitesmoke;
+  font-size: 1.2rem;
 }
 
 .counter:hover {
-  color: gray;
-  background-color: whitesmoke;
-  border: 1px solid gray;
+  color: var(--secondary-1);
+  background-color: var(--bg-3);
+  font-size: 1.5rem;
 }
 
 .buttons {
   width: 100%;
-  min-height: 50%;
-  max-height: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+}
+
+.warn {
+  color: var(--warn);
 }
 </style>
