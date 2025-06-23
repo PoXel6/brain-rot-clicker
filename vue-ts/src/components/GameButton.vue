@@ -24,19 +24,20 @@ const props = defineProps<Props>();
   button {
     margin-top: 3rem;
     padding: 1rem 3rem;
-    min-width: 20ch;
-    color: v-bind(fg);
-    background-color: v-bind(bg);
-    border: 1.5px solid hsl(150,50%,10%);
+    min-width: 30ch;
+    color: var(--text-2);
+    background-color: var(--bg-2);
+    border: 1px solid var(--border-1);
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "JetBrainsMono Nerd Font";
   }
 
   button:hover {
-    color: v-bind(bg);
-    background-color: v-bind(fg);
+    color: var(--text-3);
+    background-color: var(--bg-3);
   }
 }
 </style>
