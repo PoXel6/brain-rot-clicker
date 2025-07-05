@@ -159,6 +159,7 @@ function buyAll(e: MouseEvent, cost: number): void {
   min-height: 5vh;
   margin-top: 2rem;
   font-size: 1.2rem;
+  transition: all 250ms ease-out;
 }
 
 .counter:hover {

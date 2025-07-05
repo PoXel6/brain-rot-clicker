@@ -37,6 +37,7 @@ const {fg = "var(--text-2)"} = defineProps<Props>();
     font-size: 1.2rem;
     font-family: "JetBrainsMono Nerd Font";
     text-wrap: wrap;
+    transition: all 250ms ease-out;
   }
 
   button:hover {
