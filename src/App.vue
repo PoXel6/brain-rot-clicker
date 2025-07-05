@@ -22,7 +22,7 @@ function incMulti(e: MouseEvent): void {
 
 function rebirth(e: MouseEvent): void {
   const cost = 100;
-  if (count.value < cost) return;
+  if (count.value < cost || multi.value <= cost) return;
   count.value -= cost;
   multi.value -= cost;
   buyAll(e, cost);
